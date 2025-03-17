@@ -1,25 +1,9 @@
-# Ignore credential and token files
 credentials.json
 credentials.py
 token.json
-
-# Ignore the virtual environment directory
 .venv/
-
-# Ignore Python cache directories
 __pycache__/
-*.py[cod]
-
-# Ignore logs and temporary files
-*.log
-*.tmp
-
-# Ignore all files with .env extension (environment variables)
-.env
-
-# Ignore system files (macOS and Windows)
-.DS_Store
-Thumbs.db
-
 *.html
 temp
+Pipfile
+Pipfile.lock

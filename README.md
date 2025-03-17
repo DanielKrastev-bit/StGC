@@ -1,65 +1,56 @@
-# StGD - Shkolo Schedule to Google Drive
+# StGC - Shkolo Schedule to Google Calendar
 
-StGD is a Python-based tool that automates the process of scraping class schedules from Shkolo.bg and storing them in Google Calendar as tasks.
+StGC is a Python-based tool that automates scraping class schedules from Shkolo.bg and storing them in Google Calendar as events. The project now uses Firefox (GeckoDriver) for web automation.
 
 ## Features
-- **Automated login**: Logs into Shkolo.bg using your credentials.
-- **Schedule scraping**: Fetches the weekly schedule for a specific period.
-- **Headless mode**: Runs the browser in headless mode for seamless automation.
-- **File storage**: directly into Google Calendar.
-- **Error handling**: Safely handles errors and ensures the browser is closed after execution.
+
+- **Automated Login:** Logs into Shkolo.bg using your credentials.
+- **Schedule Scraping:** Fetches the weekly schedule for a specific period.
+- **Headless Mode:** Runs the browser in headless mode for seamless automation.
+- **Google Calendar Integration:** Saves schedules as calendar events.
+- **Class Grouping:** Consecutive classes with continuous time intervals are merged into a single event.
+- **Vacation Event Scheduling:** Automatically schedules vacation events (using gray color) on workdays between the last school day and the next valid date.
+- **Error Handling:** Safely manages errors and ensures resources are cleaned up after execution.
 
 ## Prerequisites
 
 - **Python 3.x**
-- **Selenium**: Install using `pip install selenium`
-- **ChromeDriver**: [Download ChromeDriver](https://developer.chrome.com/docs/chromedriver/downloads) and ensure it is in your system's `PATH`.
-- **Google Chrome**: Ensure you have Google Chrome installed.
-- **Google API setup for Drive access**
+- **Selenium:** Install with `pip install selenium`
+- **Firefox:** Make sure Firefox is installed on your system.
+- **GeckoDriver:** [Download GeckoDriver](https://github.com/mozilla/geckodriver/releases) and ensure it’s in your system's `PATH` (or update the path in your script).
+- **Google API Setup:** Configure the Google Calendar API. You'll need a `credentials.json` file (used for authentication) generated via the Google API Console.
 
 ## Setup
 
-1. Clone the repository:
+1. **Clone the Repository:**
 
-```bash
-git clone https://github.com/DanielKrastev-bit/StGD.git
-cd StGD
-```
+   ```bash
+   git clone https://github.com/DanielKrastev-bit/StGC.git
+   cd StGC
+   ```
 
-2. Install dependencies:
+2. **Create a Virtual Environment**
 
-```bash
-pip install -r requirements.txt
-```
-Download and place the ChromeDriver executable in /usr/local/bin/ or any path available in your system. You can also update the chrome_driver_path in the script if ChromeDriver is located elsewhere.
+   ```bash
+    python -m venv .venv
+    source .venv/bin/activate
+    ```
+3. **Then install dependencies:**
 
-3. Create a `credentials.py` file in the project directory containing your Shkolo.bg username and password:
-
-```python
-# credentials.py
-username = "your_username"
-password = "your_password"
-```
-4. Configure Google Drive API for Drive access. Follow Google's quickstart guide for instructions.
-
-5. Place your ChromeDriver in `/usr/local/bin/` or update the path in `scraper.py`.
-
+    ```bash
+    pip install -r requirements.txt
+    ```
+4. **Install GeckoDriver::**
+Download and place the GeckoDriver executable in a directory included in your system's PATH or update the driver path in your script accordingly.
 
 ## Usage
-**Update the week variable in the script to match the current week or implement an automatic way to calculate it.**
-Run the script:
 
-```bash
-python shkolo_scraper.py
-```
-**The schedule for the specified week will be saved in an HTML file with a unique name based on the current timestamp, located in the project directory.**
+1. **Adjust Week Variable:**
+    Update the week variable in the script (or implement an automatic calculation) to match the current week.
 
-
-**Planned Improvements**
-**Automatically calculate and scrape the current week and the following 5 weeks.**
-**Additional error handling for network or authentication issues.**
-**Support for saving older schedules in a dedicated folder.**
-**Multi-class and multi-user support.**
-
-## License
-This project is licensed under the GNU General Public License v3.0. See the LICENSE file for more details.
+2. **Run the Script:**
+    ```bash
+    python shkolo_scraper.py
+    ```
+    Schedule Output:
+    The schedule for the specified week is saved as events in Google Calendar. Vacation blocks (if detected) are automatically scheduled on the appropriate workdays.

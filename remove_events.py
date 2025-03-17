@@ -17,7 +17,8 @@ def authenticate_google_calendar():
         else:
             flow = InstalledAppFlow.from_client_secrets_file(
                 'credentials.json', SCOPES)
-            creds = flow.run_local_server(port=8081)
+            # Use run_console() for CLI environments
+            creds = flow.run_console()
         with open('token.json', 'w') as token:
             token.write(creds.to_json())
     return build('calendar', 'v3', credentials=creds)
@@ -34,7 +35,8 @@ def delete_events(service, calendar_id):
             break
 
         for event in events:
-            if 'description' in event and 'Created by StGD' in event['description']:
+            if 'description' in event and 'Created by StGC' in event['description']:
+                # Uncomment to see which events are being deleted
                 # print(f'Deleting event: {event["summary"]} at {event["start"].get("dateTime", event["start"].get("date"))}')
                 service.events().delete(calendarId=calendar_id, eventId=event['id']).execute()
 
